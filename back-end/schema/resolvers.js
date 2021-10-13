@@ -117,6 +117,21 @@ const getPatientEvents = ({ id }) => {
   });
 };
 
+const getPatientsNotes = () => {
+  let newArr = [];
+  Users.map((item) => {
+    Events.map((ev) => {
+      if (ev.patientId === item._id) {
+        return newArr.push({
+          ...item,
+          note: ev.title
+        });
+      }
+    });
+  });
+  return newArr;
+};
+
 module.exports = {
   getPatients,
   addUser,
@@ -125,5 +140,6 @@ module.exports = {
   editEvent,
   getEvent,
   getEvents,
-  getPatientEvents
+  getPatientEvents,
+  getPatientsNotes
 };

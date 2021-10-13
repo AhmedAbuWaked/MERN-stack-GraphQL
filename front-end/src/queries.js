@@ -44,6 +44,17 @@ export const GET_ALL_PATIENT = gql`
   }
 `;
 
+export const PATIENT_WITH_EVENTS = gql`
+  query GetPatientEvents {
+    getPatientsNotes {
+      _id
+      note
+      name
+      email
+    }
+  }
+`;
+
 export const ADD_NEW_EVENT = gql`
   mutation AddEvent(
     $_id: String

@@ -17,6 +17,15 @@ module.exports = buildSchema(`
     title: String
   }
 
+  type PatientNote {
+    _id: String
+    name: String
+    email: String
+    password: String
+    type: String
+    note: String
+  }
+
   type RootQuery {
     doctor: User
     secretary: User
@@ -25,7 +34,8 @@ module.exports = buildSchema(`
     getEvents: [Event]
     getEvent(id: String): Event
     getPatientEvents(id: String): [Event]
-  }
+    getPatientsNotes: [PatientNote]
+    }
 
   type RootMutation {
       addUser(_id: String, name: String, email: String, password: String, type: String): User

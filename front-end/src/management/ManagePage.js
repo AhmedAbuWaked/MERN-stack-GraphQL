@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { Button, Modal, Form, Input, notification, message } from 'antd';
 import { useMutation, useQuery } from '@apollo/client';
 import { GET_ALL_EVENTS, SIGN_UP } from '../queries';
@@ -50,6 +50,7 @@ const ManagePage = observer(({ history }) => {
           Add Patient
         </Button>
       )}
+      <Link to='/manage/patients'>Patients Info</Link>
       <Button
         type='link'
         onClick={() => {
