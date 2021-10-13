@@ -1,12 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import { Button, Modal, Form, Input, notification, message } from 'antd';
 import { useMutation, useQuery } from '@apollo/client';
 import { GET_ALL_EVENTS, SIGN_UP } from '../queries';
 import { observer } from 'mobx-react-lite';
 import Calender from './Calender';
+import { useStore } from '../store/RootStore';
 
 const ManagePage = observer(({ history }) => {
+  const { authStore } = useStore();
+  useEffect(() => {
+    console.log(
+      '🚀 ~ file: ManagePage.js ~ line 12 ~ ManagePage ~ store',
+      authStore
+    );
+  }, [authStore]);
   const [addingPatientVisibility, setAddingPatientVisibility] = useState(false);
   const [patientName, setPatientName] = useState('');
   const [patientEmail, setPatientEmail] = useState('');
@@ -36,16 +44,16 @@ const ManagePage = observer(({ history }) => {
     }
   };
 
-  if (!localStorage.getItem('user')) {
+  if (!authStore.user) {
     return <Redirect to='/' />;
   }
-  if (localStorage.getItem('user') === 'patient') {
+  if (authStore.user.userType === 'patient') {
     return <Redirect to='/patient' />;
   }
 
   return (
     <div>
-      {localStorage.getItem('user') === 'secretary' && (
+      {authStore.user.userType === 'secretary' && (
         <Button type='primary' onClick={() => setAddingPatientVisibility(true)}>
           Add Patient
         </Button>
@@ -54,7 +62,7 @@ const ManagePage = observer(({ history }) => {
       <Button
         type='link'
         onClick={() => {
-          localStorage.clear();
+          authStore.setUser({});
           history.replace('/');
         }}
       >

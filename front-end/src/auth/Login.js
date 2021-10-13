@@ -5,17 +5,23 @@ import './auth.scss';
 import { observer } from 'mobx-react-lite';
 import { useMutation } from '@apollo/client';
 import { LOGIN } from '../queries';
+import { useStore } from '../store/RootStore';
 
 const Login = observer(({ history }) => {
+  const { authStore } = useStore();
   const [loginUser, { loading }] = useMutation(LOGIN);
-  const userType = localStorage.getItem('user');
+  const userType = authStore.user.userType;
 
   const onFinish = async (values) => {
     try {
       const user = await loginUser({ variables: values });
 
-      localStorage.setItem('user', user?.data?.loginUser?.type);
-      localStorage.setItem('userId', user?.data?.loginUser?._id);
+      authStore.setUser({
+        userType: user?.data?.loginUser?.type,
+        userId: user?.data?.loginUser?._id
+      });
+      // localStorage.setItem('user', user?.data?.loginUser?.type);
+      // localStorage.setItem('userId', user?.data?.loginUser?._id);
 
       if (user?.data?.loginUser?.type === 'patient') {
         return history.replace('/patient');

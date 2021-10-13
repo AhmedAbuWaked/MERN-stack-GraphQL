@@ -4,17 +4,19 @@ import { Button } from 'antd';
 import { Redirect } from 'react-router-dom';
 import Calender from '../management/Calender';
 import { GET_PATIENT_EVENTS } from '../queries';
+import { useStore } from '../store/RootStore';
 
 const Patient = ({ history }) => {
-  const userId = localStorage.getItem('userId');
+  const { authStore } = useStore();
+  const user = authStore.user;
   const { data } = useQuery(GET_PATIENT_EVENTS, {
-    variables: { id: userId }
+    variables: { id: user.userId }
   });
 
-  if (!localStorage.getItem('user')) {
+  if (!user) {
     return <Redirect to='/' />;
   }
-  if (localStorage.getItem('user') !== 'patient') {
+  if (user.userType !== 'patient') {
     return <Redirect to='/manage' />;
   }
   return (
@@ -22,7 +24,7 @@ const Patient = ({ history }) => {
       <Button
         type='link'
         onClick={() => {
-          localStorage.clear();
+          authStore.setUser({});
           history.replace('/');
         }}
       >

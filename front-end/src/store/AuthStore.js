@@ -1,7 +1,16 @@
-const { makeAutoObservable } = require('mobx');
+const { makeAutoObservable, observable, action } = require('mobx');
 
-export class Auth {
+class Auth {
+  user = {};
+
   constructor() {
-    makeAutoObservable(this);
+    makeAutoObservable(this, {
+      user: observable,
+      setUser: action
+    });
   }
+
+  setUser = (user) => (this.user = user);
 }
+
+export const authStore = new Auth();

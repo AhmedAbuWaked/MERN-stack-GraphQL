@@ -3,11 +3,14 @@ import { Redirect } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { Form, Input, Button, Select } from 'antd';
 import { SIGN_UP } from '../queries';
+import { useStore } from '../store/RootStore';
+import { observer } from 'mobx-react';
 
 const { Option } = Select;
 
-const Signup = ({ history }) => {
-  const userType = localStorage.getItem('user');
+const Signup = observer(({ history }) => {
+  const { authStore } = useStore();
+  const userType = authStore.user.userType;
 
   const [addUser, { loading, error }] = useMutation(SIGN_UP);
 
@@ -83,6 +86,6 @@ const Signup = ({ history }) => {
       </Form>
     </div>
   );
-};
+});
 
 export default Signup;
