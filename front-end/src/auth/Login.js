@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { Form, Input, Button, message } from 'antd';
 import './auth.scss';
@@ -7,13 +7,12 @@ import { useMutation } from '@apollo/client';
 import { LOGIN } from '../queries';
 
 const Login = observer(({ history }) => {
-  const [loginUser, { loading, data }] = useMutation(LOGIN);
+  const [loginUser, { loading }] = useMutation(LOGIN);
   const userType = localStorage.getItem('user');
 
   const onFinish = async (values) => {
     try {
       const user = await loginUser({ variables: values });
-      console.log('🚀 ~ file: Login.js ~ line 14 ~ onFinish ~ test', user);
 
       localStorage.setItem('user', user?.data?.loginUser?.type);
       localStorage.setItem('userId', user?.data?.loginUser?._id);

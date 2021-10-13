@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import '@mobiscroll/react/dist/css/mobiscroll.min.css';
 import { Eventcalendar } from '@mobiscroll/react';
 import {
@@ -20,7 +20,6 @@ import {
 const { Option } = Select;
 
 const Calender = ({ isPatient, events }) => {
-  // const { getEvents } = events;
   const [form] = Form.useForm();
   const { data } = useQuery(GET_ALL_PATIENT);
   // const { data: singleEvent } = useQuery(GET_SINGLE_EVENT);
@@ -32,17 +31,7 @@ const Calender = ({ isPatient, events }) => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
-  useEffect(() => {
-    console.log(
-      '🚀 ~ file: Calender.js ~ line 17 ~ Calender ~ GET_ALL_PATIENT',
-      data
-    );
-  }, [data]);
   const onEventClick = (event) => {
-    console.log(
-      '🚀 ~ file: Calender.js ~ line 28 ~ onEventClick ~ event',
-      event.event
-    );
     setVisible(true);
     setIsEdit(true);
     setEvents(event.event);
@@ -56,19 +45,12 @@ const Calender = ({ isPatient, events }) => {
     setVisible(true);
     setIsEdit(false);
     setStartDate(event.date);
-    console.log(
-      '🚀 ~ file: Calender.js ~ line 36 ~ handleCellClick ~ event',
-      event
-    );
     return form.resetFields();
   };
 
   const [addEvent] = useMutation(ADD_NEW_EVENT);
   const [editEvent] = useMutation(EDIT_EVENT);
   const onFinish = async (values) => {
-    // values._id = Math.random().toString();
-    // values.end = new Date(endDate.setDate(endDate.getDate() + 1));
-    console.log('🚀 ~ file: Calender.js ~ line 70 ~ onFinish ~ values', values);
     try {
       if (!isEdit) {
         values.start = new Date(startDate.setDate(startDate.getDate() + 1));
@@ -94,10 +76,6 @@ const Calender = ({ isPatient, events }) => {
 
   const handleDragDrop = async (event) => {
     try {
-      // values._id = myEvents.id;
-      // values.start = new Date(
-      //   myEvents._days[0].setDate(myEvents._days[0].getDate() + 1)
-      // );
       const ev = event.event;
       ev._id = ev.id;
       await editEvent({ variables: ev });

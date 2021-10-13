@@ -1,6 +1,6 @@
+import React from 'react';
 import { useQuery } from '@apollo/client';
 import { Button } from 'antd';
-import React, { useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import Calender from '../management/Calender';
 import { GET_PATIENT_EVENTS } from '../queries';
@@ -11,9 +11,6 @@ const Patient = ({ history }) => {
     variables: { id: userId }
   });
 
-  useEffect(() => {
-    console.log('🚀 ~ file: Patient.js ~ line 11 ~ Patient ~ data', data);
-  }, [data]);
   if (!localStorage.getItem('user')) {
     return <Redirect to='/' />;
   }

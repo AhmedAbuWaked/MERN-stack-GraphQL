@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Button, Modal, Form, Input, notification, message } from 'antd';
 import { useMutation, useQuery } from '@apollo/client';
@@ -11,17 +11,9 @@ const ManagePage = observer(({ history }) => {
   const [patientName, setPatientName] = useState('');
   const [patientEmail, setPatientEmail] = useState('');
   const [patientPassword, setPatientPassword] = useState('');
-  const [events, setEvents] = useState([]);
 
   const [addUser, { loading }] = useMutation(SIGN_UP);
   const { data } = useQuery(GET_ALL_EVENTS);
-  useEffect(() => {
-    console.log(
-      '🚀 ~ file: ManagePage.js ~ line 16 ~ ManagePage ~ data',
-      data?.getEvents
-    );
-    // setEvents(data?.getEvents);
-  }, [data]);
 
   const addNewPatient = async () => {
     let patientData = {};

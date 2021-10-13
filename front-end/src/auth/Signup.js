@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { Form, Input, Button, Select } from 'antd';
@@ -9,7 +9,7 @@ const { Option } = Select;
 const Signup = ({ history }) => {
   const userType = localStorage.getItem('user');
 
-  const [addUser, { loading, error, data }] = useMutation(SIGN_UP);
+  const [addUser, { loading, error }] = useMutation(SIGN_UP);
 
   const onFinish = async (values) => {
     values._id = Math.random().toString();
@@ -23,12 +23,6 @@ const Signup = ({ history }) => {
     }
     if (!loading && !error) history.push('/');
   };
-
-  useEffect(() => {
-    console.log('🚀 ~ file: Signup.js ~ line 12 ~ Signup ~ loading', loading);
-    console.log('🚀 ~ file: Signup.js ~ line 12 ~ Signup ~ error', error);
-    console.log('🚀 ~ file: Signup.js ~ line 12 ~ Signup ~ data', data);
-  }, [data, error, loading]);
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
