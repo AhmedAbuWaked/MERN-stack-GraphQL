@@ -1,0 +1,9 @@
+.auth-container {
+  width: 500px;
+  margin: 70px auto 0;
+  border: 1px solid #ccc;
+  padding: 10px;
+  .ant-form-item-label {
+    text-align: left;
+  }
+}
